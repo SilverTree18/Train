@@ -9,41 +9,51 @@
   };
   firebase.initializeApp(config);
 
+// VARIABLES
  var database = firebase.database();
 
  var name = "";
  var destination = "";
- var time = "";
+ var trainTime = "";
  var frequency = 0;
 
  // $(document).ready(function(){
-       $("#schedule").on("click", function(){  
+   $("#schedule").on("click", function(){  
        });
 
 
- // Capture Button Click
-   $("#new-train").on("click", function(event) {
+// FUNCTIONS + EVENTS
+   $("#add-train").on("click", function(event) {
      event.preventDefault();
 
      // Grabbed values from text boxes
      name = $("#train-name").val().trim();
      destination = $("#destination").val().trim();
-     time = moment($("#train-time").val().trim(), "hh:mm").format("X");
+     trainTime = $("#train-time").val().trim()
      frequency = $("#frequency").val().trim();
 
+  console.log(name);
+  console.log(destination);
+  console.log(trainTime);
+  console.log(frequency);
   
      // Code for handling the push
      database.ref().push({
        name: name,
        destination: destination,
-       time: time,
+       trainTime: trainTime,
        frequency: frequency,
+
+
+
      });
 
   $("#train-name").val("");
   $("#destination").val("");
   $("#train-time").val("");
   $("#frequency").val("");
+
+  return false;
 
    });
 
@@ -54,15 +64,22 @@ database.ref().on("child_added", function(snapshot) {
      // Console.loging the last user's data
      console.log(sv.name);
      console.log(sv.destination);
-     console.log(sv.time);
+     console.log(sv.trainTime);
      console.log(sv.frequency);
 
-  var nextArrival = moment().diff(moment(sv.time), "minutes");
-  console.log(nextArrival);
+  var nextArrival = moment(trainTime, 'HH:mm'); 
+  var nowMoment = moment();
 
-  var minutesAway = (nextArrival-sv.frequency);
+
+  var minutesFirst = nowMoment.diff(nextArrival, 'minutes');
+  var minutesLast = minutesFirst % frequency;
+  var minutesAway = frequency - minutesLast;
+
+  var nextArrival = nowMoment.add(minutesAway, 'minutes');
+  var formatNextArrival = nextArrival.format("HH:mm");
+
    
-    var markup = "<tr><td>" + sv.name + "</td><td>" + sv.destination + "</td><td>" + sv.frequency+ "</td><td>" + nextArrival + "</td><td>" + minutesAway +"</td></tr>";
+    var markup = "<tr><td>" + sv.name + "</td><td>" + sv.destination + "</td><td>" + sv.frequency+ "</td><td>" + formatNextArrival + "</td><td>" + minutesAway +"</td></tr>";
        
        $("#schedule").prepend(markup);
    }, function(errorObject) {

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>choo-choo-train</title>
+  <!-- Bootswatch Styling for Improving the Aesthetics -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/flatly/bootstrap.min.css">
+
+  <!-- Font Awesome CSS Icons (For cool glyphicons) -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <!-- Style to fix the issue of text extending past panel length -->
+  <style>
+    .panel-body a {
+      word-break: break-all;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Main Bootstrap Search -->
+  <div class="container">
+
+    <!-- Jumbotron for Title -->
+    <div class="jumbotron" style="background-color: #20315A ; color: white;">
+      <h1 class="text-center"><strong>Come On Ride the Train</strong></h1>
+    </div>
+
+    <!-- Row for Searching New York Times -->
+    <div class="row">
+      <div class="col-sm-12">
+        <br>
+            <!-- This row will handle all of the retrieved articles -->
+    <div class="row">
+      <div class="col-sm-12">
+        <br>
+        <!-- This panel will initially be made up of a panel and wells for each of the articles retrieved -->
+        <div class="panel panel-primary">
+
+          <!-- Panel Heading for the retrieved articles box -->
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong>Current Train Schedule</strong></h3>
+          </div>
+
+          <!-- This main panel will hold each of the resulting articles -->
+          <div class="panel-body" id="well-section">
+            <table class="table" id="schedule">
+              <thead>
+                <tr>
+                  <th scope="col">Train Name</th>
+                  <th scope="col">Destination</th>
+                  <th scope="col">Frequency (min)</th>
+                  <th scope="col">Next Arrival</th>
+                  <th scope="col">Minutes Away</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+        <!-- First panel is for handling the search parameters -->
+        <div class="panel panel-primary" id="new-train">
+          <div class="panel-heading">
+            <h3 class="panel-title"><strong>Add Train</strong></h3>
+          </div>
+
+          <div class="panel-body">
+
+            <!-- Here we create an HTML Form for handling the inputs-->
+            <form role="form">
+
+              <!-- Here we create the text box for capturing the search term-->
+              <div class="form-group">
+                <label for="train-name">Train Name</label>
+                <input type="text" class="form-control" id="train-name">
+              </div>
+              <div class="form-group">
+                <label for="destination">Destination</label>
+                <input type="text" class="form-control" id="destination">
+              </div>
+              <div class="form-group">
+                <label for="train-time">First Train Time (HH:mm - military time)</label>
+                <input type="text" class="form-control" id="train-time">
+              </div>
+              <div class="form-group">
+                <label for="frequency">Frequency (min)</label>
+                <input type="text" class="form-control" id="frequency">
+              </div>
+              <!-- Here we have our final submit button -->
+              <button type="submit" class="btn btn-default" id="run-search"><i class="fa fa-search"></i> Search</button>
+              <button type="button" class="btn btn-default" id="clear-all"><i class="fa fa-trash"></i> Clear Results</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+  <!-- jQuery JS -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+
+  <!-- Code to the JavaScript File -->
+  <script src="train.js"></script>
+
+</body>
+
+</html>

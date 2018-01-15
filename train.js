@@ -29,7 +29,7 @@
      // Grabbed values from text boxes
      name = $("#train-name").val().trim();
      destination = $("#destination").val().trim();
-     trainTime = $("#train-time").val().trim()
+     trainTime = $("#train-time").val().trim();
      frequency = $("#frequency").val().trim();
 
   console.log(name);
@@ -67,16 +67,23 @@ database.ref().on("child_added", function(snapshot) {
      console.log(sv.trainTime);
      console.log(sv.frequency);
 
-  var nextArrival = moment(trainTime, 'HH:mm'); 
+  var nextArrival = moment(sv.trainTime, 'HH:mm'); 
   var nowMoment = moment();
+  // console.log(nextArrival);
+  // console.log(nowMoment);
 
 
   var minutesFirst = nowMoment.diff(nextArrival, 'minutes');
-  var minutesLast = minutesFirst % frequency;
-  var minutesAway = frequency - minutesLast;
+  var minutesLast = minutesFirst % sv.frequency;
+  var minutesAway = sv.frequency - minutesLast;
+  console.log(sv.frequency);
+  console.log(minutesLast);
+  console.log(minutesFirst);
 
   var nextArrival = nowMoment.add(minutesAway, 'minutes');
   var formatNextArrival = nextArrival.format("HH:mm");
+  // console.log(nextArrival);
+  // console.log(formatNextArrival);
 
    
     var markup = "<tr><td>" + sv.name + "</td><td>" + sv.destination + "</td><td>" + sv.frequency+ "</td><td>" + formatNextArrival + "</td><td>" + minutesAway +"</td></tr>";
